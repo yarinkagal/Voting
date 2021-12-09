@@ -1,0 +1,125 @@
+{
+  "tenant": "<MdmAccountName>",
+  "component": "<MdmNamespace>",
+  "id": "ReplicaHealthState",
+  "version": 0,
+  "description": null,
+  "pendingMetricsOrderingFix": false,
+  "isFromNewPipeline": true,
+  "scalingFactor": 1,
+  "bv": 10,
+  "enableClientSidePublication": true,
+  "enableClientSideForking": true,
+  "preferQueryMetricsStore": null,
+  "treatMissingSeriesAsZeros": false,
+  "metrics": [
+    {
+      "displayName": "Count",
+      "id": "Count",
+      "numberSuffix": null,
+      "numberType": null,
+      "higherNumberIs": null,
+      "minMaxMetricsEnabled": false
+    },
+    {
+      "displayName": "Sum",
+      "id": "Sum",
+      "numberSuffix": null,
+      "numberType": null,
+      "higherNumberIs": null,
+      "minMaxMetricsEnabled": false
+    }
+  ],
+  "computedMetrics": [
+    {
+      "displayName": "Average",
+      "id": "Average",
+      "numberSuffix": null,
+      "numberType": null,
+      "higherNumberIs": null,
+      "expression": "raw.Sum / (raw.Count || 1)",
+      "expressionEngine": null,
+      "isBuiltIn": true
+    },
+    {
+      "displayName": "NullableAverage",
+      "id": "NullableAverage",
+      "numberSuffix": null,
+      "numberType": null,
+      "higherNumberIs": null,
+      "expression": "raw.Count ? (raw.Sum / raw.Count) : null",
+      "expressionEngine": null,
+      "isBuiltIn": true
+    },
+    {
+      "displayName": "Rate",
+      "id": "Rate",
+      "numberSuffix": null,
+      "numberType": null,
+      "higherNumberIs": null,
+      "expression": "raw.Sum / 60",
+      "expressionEngine": null,
+      "isBuiltIn": true
+    }
+  ],
+  "dimensions": [
+    {
+      "displayName": "AppName",
+      "id": "AppName",
+      "dimensionValuesToIgnore": []
+    },
+    {
+      "displayName": "ClusterName",
+      "id": "ClusterName",
+      "dimensionValuesToIgnore": []
+    },
+    {
+      "displayName": "HealthState",
+      "id": "HealthState",
+      "dimensionValuesToIgnore": []
+    },
+    {
+      "displayName": "PartitionId",
+      "id": "PartitionId",
+      "dimensionValuesToIgnore": []
+    },
+    {
+      "displayName": "ReplicaId",
+      "id": "ReplicaId",
+      "dimensionValuesToIgnore": []
+    },
+    {
+      "displayName": "ServiceName",
+      "id": "ServiceName",
+      "dimensionValuesToIgnore": []
+    }
+  ],
+  "views": [
+    {
+      "displayName": "ClusterName, AppName, ServiceName, PartitionId, ReplicaId, HealthState",
+      "dimensions": [
+        "AppName",
+        "ClusterName",
+        "HealthState",
+        "PartitionId",
+        "ReplicaId",
+        "ServiceName"
+      ],
+      "distinctCountColumns": [],
+      "minMaxMetricsEnabled": false,
+      "percentileMetricsEnabled": false,
+      "useMetricsStore": false,
+      "doNotUseCacheServer": false
+    },
+    {
+      "displayName": "Total",
+      "dimensions": [],
+      "distinctCountColumns": [],
+      "minMaxMetricsEnabled": false,
+      "percentileMetricsEnabled": false,
+      "useMetricsStore": false,
+      "doNotUseCacheServer": false
+    }
+  ],
+  "metricIdentifiers": null
+}

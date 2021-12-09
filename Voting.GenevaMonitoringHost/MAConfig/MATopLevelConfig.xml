@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   This is a sample config file for Geneva Monitoring Agent.
+   This file provides a starting point for MA cofiguration and shows how to import the ServiceFabricEvents.xml into you MA configuration
+   You should edit this file as per your needs
+   Refer to Geneva MA config documentation
+   https://jarvis.dc.ad.msft.net/?page=documents&section=9c95f4eb-8689-4c9f-81bf-82d688e860fd&id=9460081d-878b-49b9-b38b-079cfc6d5ce9
+   
+   The contents of this folder get copied to the output with build under <MonitoringServicePackageDir>\MdsAgentServicePackage\MdsAgentService.Data.
+-->
+
+<MonitoringManagement version="1.0" namespace="ReplaceWithYourNamespace" eventVersion="ReplaceWithYourEventVersion" timestamp="ReplaceWithYourTimestamp">
+  <Imports>
+    <!-- Import your MA config files here. -->
+    <Import file="" />
+    <!-- Config file to import ServiceFabric events in your MA. -->
+    <Import file="ServiceFabricEvents.xml" />
+  </Imports>
+  <Accounts>
+    <!-- Add your account configuration here. -->
+  </Accounts>
+  <Management eventVolume="Medium" defaultRetentionInDays="1" >
+    <!-- Edit the contents of this element as per your requirements. -->
+    <Identity type="TenantRole" />
+    <AgentResourceUsage diskQuotaInMB="5000"/>
+  </Management>
+</MonitoringManagement>

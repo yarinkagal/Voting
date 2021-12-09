@@ -1,0 +1,9 @@
+{
+  "MONITORING_GCS_DSMSURL" : "<GcsDsmsUrl>",
+  "MONITORING_GCS_ENVIRONMENT" : "<GcsEnvironment>",
+  "MONITORING_GCS_ACCOUNT" : "<GcsGenevaAccount>",
+  "MONITORING_GCS_NAMESPACE" : "<GcsNamespace>",
+  "MONITORING_GCS_REGION" : "<GcsRegion>",
+  "MONITORING_CONFIG_VERSION" : "<GenevaConfigVersion>",
+  "MONITORING_SERVICE_TENANT_KEY" : ""
+}

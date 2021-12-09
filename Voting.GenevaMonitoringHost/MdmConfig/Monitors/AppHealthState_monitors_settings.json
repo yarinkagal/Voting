@@ -1,0 +1,80 @@
+{
+  "tenant": "<MdmAccountName>",
+  "component": "<MdmNamespace>",
+  "id": "AppHealthState",
+  "monitors": [
+    {
+      "id": "ApplicationErrorStateMonitor",
+      "version": 30,
+      "isSilent": true,
+      "isDisabled": false,
+      "dashboardName": "AppHealthState",
+      "dashboardNamespace": "<MdmNamespace>",
+      "description": "",
+      "dashboards": [],
+      "isThrottled": false,
+      "conditions": [
+        [
+          "AppName",
+          "<CommaSeparatedListOfApps>",
+          ""
+        ],
+        [
+          "ClusterName",
+          "*",
+          ""
+        ],
+        [
+          "HealthState",
+          "Error",
+          ""
+        ]
+      ],
+      "lookbackDuration": "0.0:10:00",
+      "frequency": "0.0:5:00",
+      "category": "",
+      "metadata": [
+        {
+          "metadataKey": "TSG",
+          "metadataValue": ""
+        }
+      ],
+      "resourceType": "ApplicationHealth",
+      "templateType": 2,
+      "thresholds": [
+        {
+          "comparator": ">=",
+          "value": "2",
+          "severity": "3"
+        }
+      ],
+      "shouldMitigateIncident": true,
+      "healthyDurationToMitigateIncident": "0:5:00",
+      "healthyCountToMitigateIncident": 2,
+      "monitorActorConfiguration": {
+        "maxBufferSizeForRetrievedData": 0,
+        "maxConcurrentRetrieveOperations": 0,
+        "maxDegreeOfParallelismForEvaluateBlock": 0,
+        "combinationsChunkSizePerConcurrentEvaluateBlock": 0,
+        "minCombinationsCountToRequirePartition": 0,
+        "maxCombinationsCountPerPartition": 0,
+        "maxCombinationsEvaluationThreshold": 0,
+        "useHealthService": false,
+        "resourceTypeOverride": "",
+        "debug": false,
+        "hintLookbackDuration": "00:00:00",
+        "disabled": false,
+        "overrideMetricDataValidation": false
+      },
+      "templateSpecificParameters": {
+        "numerator": "",
+        "denominator": "",
+        "metric": "Count",
+        "lookbackType": "0.0:10:00",
+        "jsSnippet": "",
+        "alertOnDivideByZeroError": "false",
+        "skipOnNoData": "false"
+      }
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ApplicationManifest ApplicationTypeName="FabricMonitoringServiceApplication" ApplicationTypeVersion="8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/2011/01/fabric">
+  <Parameters>
+    <Parameter Name="ClusterName" DefaultValue="ClusterNameUnknown" />
+    <!-- A comma separated list of jon files names that will be registered, All means all jsons will be picked. Ex: Tenant1.json,Tenant2.json -->
+    <Parameter Name="EnabledTenantJsons" DefaultValue="All" />
+    <Parameter Name="MdmAccountName" DefaultValue="" />
+    <Parameter Name="MdmNamespace" DefaultValue="" />
+    <Parameter Name="MdmDataCenterName" DefaultValue="DataCenterNameUnknown" />
+    <Parameter Name="HealthDataReadIntervalInMinutes" DefaultValue="5" />
+    <Parameter Name="HealthDataReadTimeoutInSeconds" DefaultValue="60" />
+    <Parameter Name="HealthQueryTimeoutInSeconds" DefaultValue="30" />
+    <Parameter Name="ReportServiceHealth" DefaultValue="Always" />
+    <Parameter Name="ApplicationsThatReportServiceHealth" DefaultValue="All" />
+    <Parameter Name="ReportPartitionHealth" DefaultValue="Always" />
+    <Parameter Name="ApplicationsThatReportPartitionHealth" DefaultValue="fabric:/System" />
+    <Parameter Name="ReportReplicaHealth" DefaultValue="Always" />
+    <Parameter Name="ApplicationsThatReportReplicaHealth" DefaultValue="fabric:/System" />
+    <Parameter Name="ReportDeployedApplicationHealth" DefaultValue="Never" />
+    <Parameter Name="ApplicationsThatReportDeployedApplicationHealth" DefaultValue="" />
+    <Parameter Name="ReportServicePackageHealth" DefaultValue="Never" />
+    <Parameter Name="ApplicationsThatReportServicePackageHealth" DefaultValue="" />
+    <Parameter Name="ReportHealthEvents" DefaultValue="Always" />
+    <Parameter Name="ApplicationsThatReportHealthEvents" DefaultValue="All" />
+    <Parameter Name="IncludeApplicationVersionInHealthReports" DefaultValue="false" />
+    <Parameter Name="CustomMetricDimensions" DefaultValue="" />
+    <Parameter Name="AgentStartTimeoutInSeconds" DefaultValue="120" />
+    <Parameter Name="AllowHyphensInNames" DefaultValue="false" />
+    <Parameter Name="RetryTimeoutInSeconds" DefaultValue="0" />
+    <Parameter Name="WaitForService" DefaultValue="false" />
+  </Parameters>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="MonitoringServicePackage" ServiceManifestVersion="8.3" />
+    <ConfigOverrides>
+      <ConfigOverride Name="MonitoringService.Config">
+        <Settings>
+          <Section Name="HealthDataProducer">
+            <Parameter Name="ClusterName" Value="[ClusterName]" />
+            <Parameter Name="HealthDataReadIntervalInMinutes" Value="[HealthDataReadIntervalInMinutes]" />
+            <Parameter Name="HealthDataReadTimeoutInSeconds" Value="[HealthDataReadTimeoutInSeconds]" />
+            <Parameter Name="HealthQueryTimeoutInSeconds" Value="[HealthQueryTimeoutInSeconds]" />
+            <Parameter Name="ReportServiceHealth" Value="[ReportServiceHealth]" />
+            <Parameter Name="ApplicationsThatReportServiceHealth" Value="[ApplicationsThatReportServiceHealth]" />
+            <Parameter Name="ReportPartitionHealth" Value="[ReportPartitionHealth]" />
+            <Parameter Name="ApplicationsThatReportPartitionHealth" Value="[ApplicationsThatReportPartitionHealth]" />
+            <Parameter Name="ReportReplicaHealth" Value="[ReportReplicaHealth]" />
+            <Parameter Name="ApplicationsThatReportReplicaHealth" Value="[ApplicationsThatReportReplicaHealth]" />
+            <Parameter Name="ReportDeployedApplicationHealth" Value="[ReportDeployedApplicationHealth]" />
+            <Parameter Name="ApplicationsThatReportDeployedApplicationHealth" Value="[ApplicationsThatReportDeployedApplicationHealth]" />
+            <Parameter Name="ReportServicePackageHealth" Value="[ReportServicePackageHealth]" />
+            <Parameter Name="ApplicationsThatReportServicePackageHealth" Value="[ApplicationsThatReportServicePackageHealth]" />
+            <Parameter Name="ReportHealthEvents" Value="[ReportHealthEvents]" />
+            <Parameter Name="ApplicationsThatReportHealthEvents" Value="[ApplicationsThatReportHealthEvents]" />
+            <Parameter Name="IncludeApplicationVersionInHealthReports" Value="[IncludeApplicationVersionInHealthReports]" />
+          </Section>
+          <Section Name="MdsHealthDataConsumer">
+            <Parameter Name="MdmAccountName" Value="[MdmAccountName]" />
+            <Parameter Name="MdmNamespace" Value="[MdmNamespace]" />
+            <Parameter Name="DataCenter" Value="[MdmDataCenterName]" />
+            <Parameter Name="CustomMetricDimensions" Value="[CustomMetricDimensions]" />
+          </Section>
+        </Settings>
+      </ConfigOverride>
+    </ConfigOverrides>
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="MdsAgentServicePackage" ServiceManifestVersion="8.3" />
+    <ConfigOverrides>
+      <ConfigOverride Name="MdsAgentService.Config">
+        <Settings>
+          <Section Name="FabricMdsAgentServiceConfig">
+            <Parameter Name="ClusterName" Value="[ClusterName]" />
+            <Parameter Name="EnabledTenantJsons" Value="[EnabledTenantJsons]" />
+            <Parameter Name="AgentStartTimeoutInSeconds" Value="[AgentStartTimeoutInSeconds]" />
+            <Parameter Name="AllowHyphensInNames" Value="[AllowHyphensInNames]" />
+            <Parameter Name="RetryTimeoutInSeconds" Value="[RetryTimeoutInSeconds]" />
+            <Parameter Name="WaitForService" Value="[WaitForService]" />
+          </Section>
+        </Settings>
+      </ConfigOverride>
+    </ConfigOverrides>
+    <Policies>
+      <!-- To allow MAS client spawned by the service to write json files to jsonDropDirectory -->
+      <RunAsPolicy CodePackageRef="MdsAgentService.Code" UserRef="MALocalSystem" EntryPointType="Main"/>
+    </Policies>
+  </ServiceManifestImport>
+  <Principals>
+    <Users>
+      <User Name="MALocalSystem" AccountType="LocalSystem" />
+    </Users>
+  </Principals>
+</ApplicationManifest>

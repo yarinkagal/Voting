@@ -1,0 +1,3 @@
+AUDIT_INSTALL_LOG="C:\repos\ASM-IFxAudit\src\ConfigureForAuditing\AuditInstaller.log"                                          
+"C:\repos\ASM-IFxAudit\src\ConfigureForAuditing\ConfigureForAuditing.exe"  /sizeInMB 500 /accountName redmond\dmkharch                                   
+AuditInstaller.cmd finished!                                                       

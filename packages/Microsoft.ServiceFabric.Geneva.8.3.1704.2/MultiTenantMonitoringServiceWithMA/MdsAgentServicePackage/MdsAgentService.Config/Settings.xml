@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Settings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/2011/01/fabric">
+  <Section Name="FabricMdsAgentServiceConfig">
+    <Parameter Name="ClusterName" Value="" MustOverride="true" />
+    <Parameter Name="EnabledTenantJsons" Value="" MustOverride="true" />
+    <Parameter Name="AgentStartTimeoutInSeconds" Value="" MustOverride="true" />
+    <!-- 
+      Setting AllowHyphensInNames ensures that the normalization of node names 
+      allows hyphens to not be converted into an underscore. Hyphens have been supported in MA 
+      / VMSS and SF node names, but were getting normalized in the code. Correcting this behavior
+      and adding a opt-in flag so that anyone who was compensating for this behavior in their code do not break.
+    -->
+    <Parameter Name="AllowHyphensInNames" Value="false" MustOverride="false" />
+    <Parameter Name="RetryTimeoutInSeconds" Value="0" MustOverride="true" />
+    <Parameter Name="WaitForService" Value="false" MustOverride="true" />
+  </Section>
+</Settings>

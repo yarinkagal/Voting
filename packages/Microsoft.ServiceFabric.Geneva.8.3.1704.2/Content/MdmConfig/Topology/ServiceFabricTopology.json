@@ -1,0 +1,458 @@
+{
+  "tenant": "<MdmAccountName>",
+  "version": 0,
+  "icmConfig": {
+    "url": "https://icm.ad.msft.net/Connector2/ConnectorIncidentManager.svc",
+    "connectorId": "<YourIcmConnectorGuid>"
+  },
+  "resourceTypeConfigurations": [
+    {
+      "version": 28,
+      "name": "ClusterHeartbeat",
+      "armResourceIdDimension": null,
+      "armResourceLocationDimension": null,
+      "armResourceType": null,
+      "identifierProperties": [
+        "ClusterName"
+      ],
+      "viewConfiguration": {
+        "name": "<HealthTreeRoot>",
+        "nodeNames": [
+          "{ClusterName}",
+          "Heartbeat"
+        ]
+      },
+      "incidentConfiguration": {
+        "environment": "<EnvName>",
+        "dataCenter": null,
+        "deviceGroup": null,
+        "deviceName": null,
+        "serviceInstanceId": null,
+        "routingId": "<IcmRoutingId>",
+        "diagnosticsLink": null,
+        "metricsViewComponent": null,
+        "metricsViewName": null
+      },
+      "healthExpressions": [
+        {
+          "$type": "Microsoft.Online.RecoveryService.Contract.Models.AnyFailingWatchdogHealthExpression, Microsoft.Online.RecoveryService.Contract",
+          "severity": 4,
+          "forceSeverity": false,
+          "suppressIncident": false,
+          "type": 2
+        }
+      ],
+      "watchdogConfigurations": [],
+      "actionConfigurations": null,
+      "topologyConfiguration": {
+        "parentResourceType": null,
+        "dmsTargetResourceType": null,
+        "dmsTargetResourceName": null,
+        "logChildMetrics": false
+      },
+      "successTimeout": 0,
+      "failureTimeout": 0,
+      "capacity": 0.0,
+      "shouldEmitHealthMetrics": true
+    },
+    {
+      "version": 27,
+      "name": "ApplicationHealth",
+      "armResourceIdDimension": null,
+      "armResourceLocationDimension": null,
+      "armResourceType": null,
+      "identifierProperties": [
+        "ClusterName",
+        "AppName",
+        "HealthState"
+      ],
+      "viewConfiguration": {
+        "name": "<HealthTreeRoot>",
+        "nodeNames": [
+          "{ClusterName}",
+          "Applications",
+          "{AppName}",
+          "ApplicationHealth",
+          "{HealthState}"
+        ]
+      },
+      "incidentConfiguration": {
+        "environment": "<EnvName>",
+        "dataCenter": null,
+        "deviceGroup": null,
+        "deviceName": null,
+        "serviceInstanceId": null,
+        "routingId": "<IcmRoutingId>",
+        "diagnosticsLink": null,
+        "metricsViewComponent": null,
+        "metricsViewName": null
+      },
+      "healthExpressions": [
+        {
+          "$type": "Microsoft.Online.RecoveryService.Contract.Models.AnyFailingWatchdogHealthExpression, Microsoft.Online.RecoveryService.Contract",
+          "severity": 4,
+          "forceSeverity": false,
+          "suppressIncident": false,
+          "type": 2
+        }
+      ],
+      "watchdogConfigurations": [],
+      "actionConfigurations": null,
+      "topologyConfiguration": {
+        "parentResourceType": null,
+        "dmsTargetResourceType": null,
+        "dmsTargetResourceName": null,
+        "logChildMetrics": false
+      },
+      "successTimeout": 0,
+      "failureTimeout": 0,
+      "capacity": 0.0,
+      "shouldEmitHealthMetrics": true
+    },
+    {
+      "version": 22,
+      "name": "AggregatedNodeHealth",
+      "armResourceIdDimension": null,
+      "armResourceLocationDimension": null,
+      "armResourceType": null,
+      "identifierProperties": [
+        "ClusterName"
+      ],
+      "viewConfiguration": {
+        "name": "<HealthTreeRoot>",
+        "nodeNames": [
+          "{ClusterName}",
+          "Nodes",
+          "AggregatedNodeHealth"
+        ]
+      },
+      "incidentConfiguration": {
+        "environment": "<EnvName>",
+        "dataCenter": null,
+        "deviceGroup": null,
+        "deviceName": null,
+        "serviceInstanceId": null,
+        "routingId": "<IcmRoutingId>",
+        "diagnosticsLink": null,
+        "metricsViewComponent": null,
+        "metricsViewName": null
+      },
+      "healthExpressions": [
+        {
+          "$type": "Microsoft.Online.RecoveryService.Contract.Models.AnyFailingWatchdogHealthExpression, Microsoft.Online.RecoveryService.Contract",
+          "severity": 4,
+          "forceSeverity": false,
+          "suppressIncident": false,
+          "type": 2
+        },
+        {
+          "$type": "Microsoft.Online.RecoveryService.Contract.Models.UnhealthyChildrenHealthExpression, Microsoft.Online.RecoveryService.Contract",
+          "conditions": [
+            {
+              "percentageMin": 35,
+              "percentageMax": 100,
+              "healthStatus": 1,
+              "severity": 4,
+              "suppressIncident": false,
+              "forceSeverity": false
+            },
+            {
+              "percentageMin": 0,
+              "percentageMax": 34,
+              "healthStatus": 0,
+              "severity": 4,
+              "suppressIncident": true,
+              "forceSeverity": true
+            }
+          ],
+          "type": 1
+        }
+      ],
+      "watchdogConfigurations": [],
+      "actionConfigurations": null,
+      "topologyConfiguration": {
+        "parentResourceType": null,
+        "dmsTargetResourceType": null,
+        "dmsTargetResourceName": null,
+        "logChildMetrics": false
+      },
+      "successTimeout": 0,
+      "failureTimeout": 0,
+      "capacity": 0.0,
+      "shouldEmitHealthMetrics": true
+    },
+    {
+      "version": 22,
+      "name": "NodeHealth",
+      "armResourceIdDimension": null,
+      "armResourceLocationDimension": null,
+      "armResourceType": null,
+      "identifierProperties": [
+        "ClusterName",
+        "NodeName",
+        "HealthState"
+      ],
+      "viewConfiguration": {
+        "name": "<HealthTreeRoot>",
+        "nodeNames": [
+          "{ClusterName}",
+          "Nodes",
+          "IndividualNodeHealth",
+          "{NodeName}",
+          "Health",
+          "{HealthState}"
+        ]
+      },
+      "incidentConfiguration": {
+        "environment": "<EnvName>",
+        "dataCenter": null,
+        "deviceGroup": null,
+        "deviceName": null,
+        "serviceInstanceId": null,
+        "routingId": "<IcmRoutingId>",
+        "diagnosticsLink": null,
+        "metricsViewComponent": null,
+        "metricsViewName": null
+      },
+      "healthExpressions": [
+        {
+          "$type": "Microsoft.Online.RecoveryService.Contract.Models.AnyFailingWatchdogHealthExpression, Microsoft.Online.RecoveryService.Contract",
+          "severity": 4,
+          "forceSeverity": false,
+          "suppressIncident": true,
+          "type": 2
+        }
+      ],
+      "watchdogConfigurations": [],
+      "actionConfigurations": null,
+      "topologyConfiguration": {
+        "parentResourceType": "AggregatedNodeHealth",
+        "dmsTargetResourceType": null,
+        "dmsTargetResourceName": null,
+        "logChildMetrics": false
+      },
+      "successTimeout": 0,
+      "failureTimeout": 0,
+      "capacity": 0.0,
+      "shouldEmitHealthMetrics": true
+    },
+    {
+      "version": 20,
+      "name": "NodeVitals",
+      "armResourceIdDimension": null,
+      "armResourceLocationDimension": null,
+      "armResourceType": null,
+      "identifierProperties": [
+        "ClusterName",
+        "NodeName"
+      ],
+      "viewConfiguration": {
+        "name": "<HealthTreeRoot>",
+        "nodeNames": [
+          "{ClusterName}",
+          "Nodes",
+          "IndividualNodeHealth",
+          "{NodeName}",
+          "NodeVitals"
+        ]
+      },
+      "incidentConfiguration": {
+        "environment": "<EnvName>",
+        "dataCenter": null,
+        "deviceGroup": null,
+        "deviceName": null,
+        "serviceInstanceId": null,
+        "routingId": "<IcmRoutingId>",
+        "diagnosticsLink": null,
+        "metricsViewComponent": null,
+        "metricsViewName": null
+      },
+      "healthExpressions": [
+        {
+          "$type": "Microsoft.Online.RecoveryService.Contract.Models.AnyFailingWatchdogHealthExpression, Microsoft.Online.RecoveryService.Contract",
+          "severity": 4,
+          "forceSeverity": false,
+          "suppressIncident": false,
+          "type": 2
+        }
+      ],
+      "watchdogConfigurations": [],
+      "actionConfigurations": null,
+      "topologyConfiguration": {
+        "parentResourceType": null,
+        "dmsTargetResourceType": null,
+        "dmsTargetResourceName": null,
+        "logChildMetrics": false
+      },
+      "successTimeout": 0,
+      "failureTimeout": 0,
+      "capacity": 0.0,
+      "shouldEmitHealthMetrics": true
+    },
+    {
+      "version": 7,
+      "name": "ClusterHealth",
+      "armResourceIdDimension": null,
+      "armResourceLocationDimension": null,
+      "armResourceType": null,
+      "identifierProperties": [
+        "ClusterName",
+        "HealthState"
+      ],
+      "viewConfiguration": {
+        "name": "<HealthTreeRoot>",
+        "nodeNames": [
+          "{ClusterName}",
+          "{HealthState}"
+        ]
+      },
+      "incidentConfiguration": {
+        "environment": "<EnvName>",
+        "dataCenter": null,
+        "deviceGroup": null,
+        "deviceName": null,
+        "serviceInstanceId": null,
+        "routingId": "<IcmRoutingId>",
+        "diagnosticsLink": null,
+        "metricsViewComponent": null,
+        "metricsViewName": null
+      },
+      "healthExpressions": [
+        {
+          "$type": "Microsoft.Online.RecoveryService.Contract.Models.AnyFailingWatchdogHealthExpression, Microsoft.Online.RecoveryService.Contract",
+          "severity": 4,
+          "forceSeverity": false,
+          "suppressIncident": false,
+          "type": 2
+        }
+      ],
+      "watchdogConfigurations": [],
+      "actionConfigurations": null,
+      "topologyConfiguration": {
+        "parentResourceType": null,
+        "dmsTargetResourceType": null,
+        "dmsTargetResourceName": null,
+        "logChildMetrics": false
+      },
+      "successTimeout": 0,
+      "failureTimeout": 0,
+      "capacity": 0.0,
+      "shouldEmitHealthMetrics": true
+    },
+    {
+      "version": 5,
+      "name": "PartitionHealth",
+      "armResourceIdDimension": null,
+      "armResourceLocationDimension": null,
+      "armResourceType": null,
+      "identifierProperties": [
+        "ClusterName",
+        "AppName",
+        "ServiceName",
+        "PartitionId",
+        "HealthState"
+      ],
+      "viewConfiguration": {
+        "name": "<HealthTreeRoot>",
+        "nodeNames": [
+          "{ClusterName}",
+          "Applications",
+          "{AppName}",
+          "Services",
+          "{ServiceName}",
+          "Partitions",
+          "{PartitionId}",
+          "{HealthState}"
+        ]
+      },
+      "incidentConfiguration": {
+        "environment": "<EnvName>",
+        "dataCenter": null,
+        "deviceGroup": null,
+        "deviceName": null,
+        "serviceInstanceId": null,
+        "routingId": "<IcmRoutingId>",
+        "diagnosticsLink": null,
+        "metricsViewComponent": null,
+        "metricsViewName": null
+      },
+      "healthExpressions": [
+        {
+          "$type": "Microsoft.Online.RecoveryService.Contract.Models.AnyFailingWatchdogHealthExpression, Microsoft.Online.RecoveryService.Contract",
+          "severity": 4,
+          "forceSeverity": false,
+          "suppressIncident": false,
+          "type": 2
+        }
+      ],
+      "watchdogConfigurations": [],
+      "actionConfigurations": null,
+      "topologyConfiguration": {
+        "parentResourceType": null,
+        "dmsTargetResourceType": null,
+        "dmsTargetResourceName": null,
+        "logChildMetrics": false
+      },
+      "successTimeout": 0,
+      "failureTimeout": 0,
+      "capacity": 0.0,
+      "shouldEmitHealthMetrics": true
+    },
+    {
+      "version": 1,
+      "name": "ServiceHealth",
+      "armResourceIdDimension": null,
+      "armResourceLocationDimension": null,
+      "armResourceType": null,
+      "identifierProperties": [
+        "ClusterName",
+        "AppName",
+        "ServiceName",
+        "HealthState"
+      ],
+      "viewConfiguration": {
+        "name": "<HealthTreeRoot>",
+        "nodeNames": [
+          "{ClusterName}",
+          "Applications",
+          "{AppName}",
+          "Services",
+          "{ServiceName}",
+          "{HealthState}"
+        ]
+      },
+      "incidentConfiguration": {
+        "environment": "<EnvName>",
+        "dataCenter": null,
+        "deviceGroup": null,
+        "deviceName": null,
+        "serviceInstanceId": null,
+        "routingId": "<IcmRoutingId>",
+        "diagnosticsLink": null,
+        "metricsViewComponent": null,
+        "metricsViewName": null
+      },
+      "healthExpressions": [
+        {
+          "$type": "Microsoft.Online.RecoveryService.Contract.Models.AnyFailingWatchdogHealthExpression, Microsoft.Online.RecoveryService.Contract",
+          "severity": 4,
+          "forceSeverity": false,
+          "suppressIncident": false,
+          "type": 2
+        }
+      ],
+      "watchdogConfigurations": [],
+      "actionConfigurations": null,
+      "topologyConfiguration": {
+        "parentResourceType": null,
+        "dmsTargetResourceType": null,
+        "dmsTargetResourceName": null,
+        "logChildMetrics": false
+      },
+      "successTimeout": 0,
+      "failureTimeout": 0,
+      "capacity": 0.0,
+      "shouldEmitHealthMetrics": true
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "tenant": "<MdmAccountName>",
+  "component": "<MdmNamespace>",
+  "id": "NodeHealthState",
+  "monitors": [
+    {
+      "id": "NodeHealthStateMonitor",
+      "version": 8,
+      "isSilent": true,
+      "isDisabled": false,
+      "description": "",
+      "dashboards": [],
+      "isThrottled": false,
+      "conditions": [
+        [
+          "ClusterName",
+          "*",
+          ""
+        ],
+        [
+          "HealthState",
+          "Error",
+          ""
+        ],
+        [
+          "NodeName",
+          "*",
+          ""
+        ]
+      ],
+      "lookbackDuration": "0.0:15:00",
+      "frequency": "0.0:5:00",
+      "category": "",
+      "metadata": [
+        {
+          "metadataKey": "TSG",
+          "metadataValue": ""
+        }
+      ],
+      "resourceType": "NodeHealth",
+      "templateType": 2,
+      "thresholds": [
+        {
+          "comparator": ">=",
+          "value": "3",
+          "severity": "3"
+        }
+      ],
+      "shouldMitigateIncident": true,
+      "healthyDurationToMitigateIncident": "0:5:00",
+      "healthyCountToMitigateIncident": 2,
+      "monitorActorConfiguration": {
+        "maxBufferSizeForRetrievedData": 0,
+        "maxConcurrentRetrieveOperations": 0,
+        "maxDegreeOfParallelismForEvaluateBlock": 0,
+        "combinationsChunkSizePerConcurrentEvaluateBlock": 0,
+        "minCombinationsCountToRequirePartition": 0,
+        "maxCombinationsCountPerPartition": 0,
+        "maxCombinationsEvaluationThreshold": 0,
+        "useHealthService": false,
+        "resourceTypeOverride": "",
+        "debug": false,
+        "hintLookbackDuration": "00:00:00",
+        "disabled": false,
+        "overrideMetricDataValidation": false
+      },
+      "templateSpecificParameters": {
+        "numerator": "",
+        "denominator": "",
+        "metric": "Count",
+        "lookbackType": "0.0:15:00",
+        "jsSnippet": "",
+        "alertOnDivideByZeroError": "false",
+        "skipOnNoData": "false"
+      }
+    }
+  ]
+}

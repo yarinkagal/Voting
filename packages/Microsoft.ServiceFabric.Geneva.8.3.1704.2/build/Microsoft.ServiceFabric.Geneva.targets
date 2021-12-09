@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+***********************************************************************************************
+Microsoft.ServiceFabric.Geneva.targets
+
+Integrates the contents of GenevaMonitoringAgent package with Microsoft.ServiceFabric.Geneva package
+
+Copyright (C) Microsoft Corporation. All rights reserved.
+***********************************************************************************************
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="ExecuteAfterBuild" AfterTargets="Build">
+    <Message Text="Microsoft.ServiceFabric.Geneva.targets Start: copying agent bits to servicefabric monitoring application package" />
+    <ItemGroup>
+      <AgentBits Include="$(OutputPath)\Monitoring\agent\**\*.*" />
+      <MaConfigFiles Include="$(OutputPath)\MAConfig\*.*" />
+      <ApplicationManifestFile Include="$(MSBuildThisFileDirectory)\..\Content\ManifestFiles\ApplicationManifest.xml" />
+      <MonSvcManifestFile Include="$(MSBuildThisFileDirectory)\..\Content\ManifestFiles\MonitoringServicePackage\ServiceManifest.xml" />
+      <MdsAgentSvcManifestFile Include="$(MSBuildThisFileDirectory)\..\Content\ManifestFiles\MdsAgentServicePackage\ServiceManifest.xml" />
+    </ItemGroup>
+    <Copy SourceFiles="@(AgentBits)" DestinationFolder="$(OutputPath)\MonitoringServiceWithMA\MdsAgentServicePackage\MdsAgent.Data\%(RecursiveDir)">
+    </Copy>
+    <Copy SourceFiles="@(MaConfigFiles)" DestinationFolder="$(OutputPath)\MonitoringServiceWithMA\MdsAgentServicePackage\MdsAgent.Data">
+    </Copy>
+    <Copy SourceFiles="@(ApplicationManifestFile)" DestinationFolder="$(OutputPath)\MonitoringServiceWithMA\">
+    </Copy>
+    <Copy SourceFiles="@(MonSvcManifestFile)" DestinationFolder="$(OutputPath)\MonitoringServiceWithMA\MonitoringServicePackage\">
+    </Copy>
+    <Copy SourceFiles="@(MdsAgentSvcManifestFile)" DestinationFolder="$(OutputPath)\MonitoringServiceWithMA\MdsAgentServicePackage\">
+    </Copy>
+    <Message Text="Microsoft.ServiceFabric.Geneva.targets End: Done copying agent bits to servicefabric monitoring application package" />
+  </Target>
+</Project>

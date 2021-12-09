@@ -1,0 +1,5 @@
+C:\Users\yarinkagal\source\repos\new3\Voting\TrafficManager\obj\Debug\netcoreapp3.1\win7-x64\TrafficManager.csproj.AssemblyReference.cache
+C:\Users\yarinkagal\source\repos\new3\Voting\TrafficManager\obj\Debug\netcoreapp3.1\win7-x64\TrafficManager.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\yarinkagal\source\repos\new3\Voting\TrafficManager\obj\Debug\netcoreapp3.1\win7-x64\TrafficManager.AssemblyInfoInputs.cache
+C:\Users\yarinkagal\source\repos\new3\Voting\TrafficManager\obj\Debug\netcoreapp3.1\win7-x64\TrafficManager.AssemblyInfo.cs
+C:\Users\yarinkagal\source\repos\new3\Voting\TrafficManager\obj\Debug\netcoreapp3.1\win7-x64\TrafficManager.csproj.CoreCompileInputs.cache
