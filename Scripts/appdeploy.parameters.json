@@ -9,25 +9,13 @@
       "value": "ObjectsType1"
     },
     "applicationTypeVersion":{
-      "value": "1.0.6"
+      "value": "1.1.2"
     },
     "appPackageUrl":{
       "value": "https://xteamshared.blob.core.windows.net/drill-packages/YarinVoting.sfpkg"
     },
     "applicationName":{
       "value": "Voting"
-    },
-    "serviceName":{
-      "value": "VotingWeb"
-    },
-    "serviceTypeName":{
-      "value": "VotingWebType"
-    },
-    "serviceName2":{
-      "value": "VotingData"
-    },
-    "serviceTypeName2":{
-      "value": "VotingDataType"
     }
 
   }

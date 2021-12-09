@@ -35,34 +35,6 @@
      "metadata": {
        "description": "The name of the application resource."
      }
-   },
-   "serviceName": {
-     "type": "string",
-     "defaultValue": "Application1~Service1",
-     "metadata": {
-       "description": "The name of the service resource in the format of {applicationName}~{serviceName}."
-     }
-   },
-   "serviceTypeName": {
-     "type": "string",
-     "defaultValue": "Service1Type",
-     "metadata": {
-       "description": "The name of the service type."
-     }
-   },
-   "serviceName2": {
-     "type": "string",
-     "defaultValue": "Application1~Service2",
-     "metadata": {
-       "description": "The name of the service resource in the format of {applicationName}~{serviceName}."
-     }
-   },
-   "serviceTypeName2": {
-     "type": "string",
-     "defaultValue": "Service2Type",
-     "metadata": {
-       "description": "The name of the service type."
-     }
    }
  },
  "variables": {
@@ -126,54 +98,7 @@
          }
        }
      }
-   },
-   {
-			"type": "Microsoft.Servicefabric/clusters/applications/services",
-			"apiVersion": "2017-07-01-preview",
-			"name": "[concat(parameters('clusterName'), '/', parameters('applicationName'), '/',concat(parameters('applicationName'), '~', parameters('serviceName')))]",
-			"location": "[variables('clusterLocation')]",
-			"properties": {
-				"provisioningState": "Default",
-				"correlationScheme": [],
-				"serviceLoadMetrics": [],
-				"serviceTypeName": "[parameters('serviceTypeName')]",
-				"serviceKind": "Stateless",
-				"instanceCount": "-1",
-				"partitionDescription": {
-					"partitionScheme": "Singleton"
-				},
-				"servicePlacementPolicies": [],
-				"defaultMoveCost": "Zero"
-			},
-			"dependsOn": [
-				"[concat('Microsoft.Servicefabric/clusters/', parameters('clusterName'), '/applications/', parameters('applicationName'))]"
-			]
-		},
-		{
-			"type": "Microsoft.Servicefabric/clusters/applications/services",
-			"apiVersion": "2017-07-01-preview",
-			"name": "[concat(parameters('clusterName'), '/', parameters('applicationName'), '/', concat(parameters('applicationName'), '~', parameters('serviceName2')))]",
-			"location": "[variables('clusterLocation')]",
-			"properties": {
-				"provisioningState": "Default",
-
-				"serviceLoadMetrics": [],
-				"serviceTypeName": "[parameters('serviceTypeName2')]",
-				"serviceKind": "Stateful",
-				"defaultMoveCost": "Zero",
-				"partitionDescription": {
-					"partitionScheme": "Singleton"
-				},
-				"hasPersistedState": "false",
-				"servicePlacementPolicies": [],
-        "TargetReplicaSetSize": "3",
-        "MinReplicaSetSize": "2"
-			
-			},
-			"dependsOn": [
-				"[concat('Microsoft.Servicefabric/clusters/', parameters('clusterName'), '/applications/', parameters('applicationName'))]"
-			]
-		}
+   }
    
  ]
 }
