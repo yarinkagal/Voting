@@ -1,0 +1,34 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "clusterName": {
+      "value": "yarineu"
+    },
+    "applicationTypeName":{
+      "value": "ObjectsType1"
+    },
+    "applicationTypeVersion":{
+      "value": "1.0.6"
+    },
+    "appPackageUrl":{
+      "value": "https://xteamshared.blob.core.windows.net/drill-packages/YarinVoting.sfpkg"
+    },
+    "applicationName":{
+      "value": "Voting"
+    },
+    "serviceName":{
+      "value": "VotingWeb"
+    },
+    "serviceTypeName":{
+      "value": "VotingWebType"
+    },
+    "serviceName2":{
+      "value": "VotingData"
+    },
+    "serviceTypeName2":{
+      "value": "VotingDataType"
+    }
+
+  }
+}

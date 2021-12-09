@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "clusterName": {
+      "value": "yarineu"
+    },
+    "adminUsername": {
+      "value": "yarinadmin"
+    },
+    "adminPassword": {
+      "value": "Password!1" 
+    },
+    "certificateThumbprint": {
+      "value": "05F7F0DF226B43AFD3C4BE7D0C5F89D062C60640"
+    },
+    "sourceVaultResourceId": {
+      "value": "/subscriptions/5de391ec-35ab-45ff-b4ce-2d6ecd7e46dd/resourceGroups/XTeamDrill/providers/Microsoft.KeyVault/vaults/XTeamDrillKv"
+    },
+    "certificateUrlValue": {
+      "value": "https://xteamdrillkv.vault.azure.net/secrets/GenevaCommunication/64fa978122984defa1fedceb422595e8"
+    }
+    ,
+    "gevenaSourceVaultResourceId":{
+      "value": "/subscriptions/5de391ec-35ab-45ff-b4ce-2d6ecd7e46dd/resourceGroups/XTeamDrill/providers/Microsoft.KeyVault/vaults/XTeamDrillKv"
+    },
+
+    "genevaCertificateUrlValue":{
+      "value": "https://xteamdrillkv.vault.azure.net/secrets/GenevaCommunication/64fa978122984defa1fedceb422595e8"
+    }
+
+  }
+}
