@@ -12,6 +12,7 @@ using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
 using Microsoft.ServiceFabric.Data;
 using VotingWeb;
+using VotingWeb.Controllers;
 
 namespace VotingData
 {
@@ -30,38 +31,12 @@ namespace VotingData
             manager = new TrafficManager();
         }
 
-        /// <summary>
-        /// Optional override to create listeners (like tcp, http) for this service instance.
-        /// </summary>
-        /// <returns>The collection of listeners.</returns>
-        //protected override IEnumerable<ServiceReplicaListener> CreateServiceReplicaListeners()
-        //{
-        //    return new ServiceReplicaListener[]
-        //    {
-        //        new ServiceReplicaListener(serviceContext =>
-        //            new KestrelCommunicationListener(serviceContext, (url, listener) =>
-        //            {
-        //                ServiceEventSource.Current.ServiceMessage(serviceContext, $"Starting Kestrel on {url}");
 
-        //                return new WebHostBuilder()
-        //                            .UseKestrel()
-        //                            .ConfigureServices(
-        //                                services => services
-        //                                    .AddSingleton<StatefulServiceContext>(serviceContext)
-        //                                    .AddSingleton<IReliableStateManager>(this.StateManager))
-        //                            .UseContentRoot(Directory.GetCurrentDirectory())
-        //                            .UseStartup<Startup>()
-        //                            .UseServiceFabricIntegration(listener, ServiceFabricIntegrationOptions.UseUniqueServiceUrl)
-        //                            .UseUrls(url)
-        //                            .Build();
-        //            }))
-        //    };
-        //}
 
-                protected override IEnumerable<ServiceReplicaListener> CreateServiceReplicaListeners()
-                {
-                    return new ServiceReplicaListener[0];
-                }
+        protected override IEnumerable<ServiceReplicaListener> CreateServiceReplicaListeners()
+        {
+            return new ServiceReplicaListener[0];
+        }
 
         protected override Task RunAsync(CancellationToken cancellationToken)
         {
@@ -75,6 +50,7 @@ namespace VotingData
                             if (manager == null)
                                 manager = new TrafficManager();
                             manager.getFromEH();
+                            manager.traceLog.LogInfo("TrafficManager.DataAccepted", "TrafficManager got data from event hub");
 
                         }
                         catch (Exception e)

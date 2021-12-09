@@ -1,0 +1,34 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "clusterName": {
+      "value": "yarineu"
+    },
+    "applicationTypeName":{
+      "value": "FabricMonitoringServiceApplication"
+    },
+    "applicationTypeVersion":{
+      "value": "8.3"
+    },
+    "appPackageUrl":{
+      "value": "https://xteamshared.blob.core.windows.net/drill-packages/YarinGeneva.sfpkg"
+    },
+    "applicationName":{
+      "value": "GenevaMonitoringHost"
+    },
+    "fabricMonitoringServiceName":{
+      "value": "MonitoringService"
+    },
+    "fabricMonitoringServiceTypeName":{
+      "value": "FabricMonitoringServiceType"
+    },
+    "fabricMdsAgentServiceName":{
+      "value": "MdsAgentService"
+    },
+    "fabricMdsAgentServiceTypeName":{
+      "value": "FabricMdsAgentServiceType"
+    }
+
+  }
+}

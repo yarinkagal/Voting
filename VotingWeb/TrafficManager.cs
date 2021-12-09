@@ -53,13 +53,14 @@ namespace VotingWeb
         public CloudBlobClient serviceClient;
         public CloudBlobContainer container;
 
+        public TraceLog traceLog;
 
 
         public TrafficManager()
         {
            serviceClient = storageAccount.CreateCloudBlobClient();
            container = serviceClient.GetContainerReference($"{dataContainerName}");
-
+            this.traceLog = traceLog = new TraceLog();
 
     }
 
@@ -86,6 +87,8 @@ namespace VotingWeb
                 string content = file.DownloadTextAsync().Result;
                 InventoryItem data = JsonConvert.DeserializeObject<InventoryItem>(content);
                 datas.Add(data);
+                this.traceLog.LogInfo("TrafficManager.DataOut", "TrafficManager got data from storage");
+
             }
 
             return datas.ToArray();
@@ -117,6 +120,8 @@ namespace VotingWeb
             {
                 // Use the producer client to send the batch of events to the event hub
                 await producerClient.SendAsync(eventBatch);
+                this.traceLog.LogInfo("TrafficManager.DataOut", $"TrafficManager sent data(id = {id}) to event hub ");
+
             }
             finally
             {
@@ -171,9 +176,11 @@ namespace VotingWeb
                 CloudBlobContainer container = serviceClient.GetContainerReference($"{dataContainerName}");
 
                 file = container.GetBlockBlobReference(data.Id);
-      
-            } 
-            catch(Exception e)
+                //this.traceLog.LogInfo("TrafficManager.DataAccepted", $"TrafficManager sent data(id = {data.Id}) to storage ");
+
+
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e);
 

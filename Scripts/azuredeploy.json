@@ -14,9 +14,63 @@
       "metadata": {
         "description": "Name of your cluster - Between 3 and 23 characters. Letters and numbers only"
       }
-    }
-    ,
-   
+    },
+    "applicationTypeName": {
+     "type": "string",
+     "defaultValue": "ApplicationType",
+     "metadata": {
+       "description": "The application type name."
+     }
+   },
+   "applicationTypeVersion": {
+     "type": "string",
+     "defaultValue": "1",
+     "metadata": {
+       "description": "The application type version."
+     }
+   },
+   "appPackageUrl": {
+     "type": "string",
+     "metadata": {
+       "description": "The URL to the application package sfpkg file."
+     }
+   },
+   "applicationName": {
+     "type": "string",
+     "defaultValue": "Application1",
+     "metadata": {
+       "description": "The name of the application resource."
+     }
+   },
+   "serviceName": {
+     "type": "string",
+     "defaultValue": "Application1~Service1",
+     "metadata": {
+       "description": "The name of the service resource in the format of {applicationName}~{serviceName}."
+     }
+   },
+   "serviceTypeName": {
+     "type": "string",
+     "defaultValue": "Service1Type",
+     "metadata": {
+       "description": "The name of the service type."
+     }
+   },
+   "serviceName2": {
+     "type": "string",
+     "defaultValue": "Application1~Service2",
+     "metadata": {
+       "description": "The name of the service resource in the format of {applicationName}~{serviceName}."
+     }
+   },
+   "serviceTypeName2": {
+     "type": "string",
+     "defaultValue": "Service2Type",
+     "metadata": {
+       "description": "The name of the service type."
+     }
+   }
+   ,
     "adminUsername": {
       "type": "string",
       "metadata": {
@@ -99,14 +153,13 @@
         "description": "Refers to the location URL in your key vault where the certificate was uploaded"
       }
     },
-    "gevenaSourceVaultResourceId": {
-      "type": "string"
+      "gevenaSourceVaultResourceId": {
+        "type": "string"
 
-    },
-
-    "genevaCertificateUrlValue" :{
-      "type": "string"
-    },
+      },
+      "genevaCertificateUrlValue" :{
+        "type": "string"
+      },
 
     "clusterProtectionLevel": {
       "type": "string",
@@ -436,45 +489,6 @@
           "extensionProfile": {
             "extensions": [
               {
-                "name": "Microsoft.Azure.Geneva.GenevaMonitoring",
-                "properties": {
-                  "publisher": "Microsoft.Azure.Geneva",
-                  "type": "GenevaMonitoring",
-                  "typeHandlerVersion": "2.0",
-                  "autoUpgradeMinorVersion": true,
-                  "settings": {
-                      "configurations": [
-                          {
-                            "ServiceArguments": {
-                              "Version": "1.0"
-                            },
-                            "UserArguments": {
-                                "GcsGenevaAccount": "GdpXteamDrill",
-                                "GcsAuthIdType": "AuthKeyVault",
-                                "GcsAuthId": "XTEAMDRILL.GENEVA.KEYVAULT.GDP.AZURE.COM",
-                                "LocalPath": "c:\\Monitoring_1",
-                                "GenevaConfigVersion": "1.0",
-                                "GcsEnvironment": "Diagnostics PROD",
-                                "GcsNamespace": "YarinkagalDrill",
-                                "GcsRegion": "%MA_RoleEnvironment_Location%",
-                                "TenantKey": "YarinDrillTest"
-                            },
-                            "ConstantVariables": {
-                                "MONITORING_TENANT": "YarinDrillTenant",
-                                "MONITORING_ROLE": "YarinDrill",
-                                "MONITORING_NODETYPE": "[variables('vmNodeType0Name')]"
-                            },
-                            "ExpandVariables": {
-                                "MONITORING_ROLE_INSTANCE": "%MA_RoleEnvironment_VMName%",
-                                "MONITORING_NODENAME": "_%MA_RoleEnvironment_VMName%"
-                            }
-                          }
-                      ]
-                  },
-                  "protectedSettings": {}
-                }
-              },
-              {
                 "name": "[concat('ServiceFabricNodeVmExt','_vmNodeType0Name')]",
                 "properties": {
                   "type": "ServiceFabricNode",
@@ -502,6 +516,11 @@
                 "name": "[concat('VMDiagnosticsVmExt','_vmNodeType0Name')]",
                 "properties": {
                   "type": "IaaSDiagnostics",
+                  "provisionAfterExtensions": [
+
+                      "ServiceFabricNodeVmExt_vmNodeType0Name"
+
+                    ],
                   "autoUpgradeMinorVersion": true,
                   "protectedSettings": {
                     "storageAccountName": "[variables('applicationDiagnosticsStorageAccountName')]",
@@ -599,7 +618,11 @@
                   }
                   
                 ]
-              }
+              } 
+
+              
+
+
             ]
           },
           "storageProfile": {
@@ -680,8 +703,65 @@
         "upgradeMode": "Automatic",
         "vmImage": "Windows"
       }
-    }
-
+    },
+    {
+     "apiVersion": "2019-03-01",
+     "type": "Microsoft.ServiceFabric/clusters/applicationTypes",
+     "name": "[concat(parameters('clusterName'), '/', parameters('applicationTypeName'))]",
+     "location": "[parameters('location')]",
+     "dependsOn": [],
+     "properties": {
+       "provisioningState": "Default"
+     }
+   },
+   {
+     "apiVersion": "2019-03-01",
+     "type": "Microsoft.ServiceFabric/clusters/applicationTypes/versions",
+     "name": "[concat(parameters('clusterName'), '/', parameters('applicationTypeName'), '/', parameters('applicationTypeVersion'))]",
+     "location": "[parameters('location')]",
+     "dependsOn": [
+       "[concat('Microsoft.ServiceFabric/clusters/', parameters('clusterName'), '/applicationTypes/', parameters('applicationTypeName'))]"
+     ],
+     "properties": {
+       "provisioningState": "Default",
+       "appPackageUrl": "[parameters('appPackageUrl')]"
+     }
+   },
+   {
+     "apiVersion": "2019-03-01",
+     "type": "Microsoft.ServiceFabric/clusters/applications",
+     "name": "[concat(parameters('clusterName'), '/', parameters('applicationName'))]",
+     "location": "[parameters('location')]",
+     "dependsOn": [
+       "[concat('Microsoft.ServiceFabric/clusters/', parameters('clusterName'), '/applicationTypes/', parameters('applicationTypeName'), '/versions/', parameters('applicationTypeVersion'))]"
+     ],
+     "properties": {
+       "provisioningState": "Default",
+       "typeName": "[parameters('applicationTypeName')]",
+       "typeVersion": "[parameters('applicationTypeVersion')]",
+       "parameters": {},
+       "upgradePolicy": {
+         "upgradeReplicaSetCheckTimeout": "01:00:00.0",
+         "forceRestart": "false",
+         "rollingUpgradeMonitoringPolicy": {
+           "healthCheckWaitDuration": "00:02:00.0",
+           "healthCheckStableDuration": "00:05:00.0",
+           "healthCheckRetryTimeout": "00:10:00.0",
+           "upgradeTimeout": "01:00:00.0",
+           "upgradeDomainTimeout": "00:20:00.0"
+         },
+         "applicationHealthPolicy": {
+           "considerWarningAsError": "false",
+           "maxPercentUnhealthyDeployedApplications": "50",
+           "defaultServiceTypeHealthPolicy": {
+             "maxPercentUnhealthyServices": "50",
+             "maxPercentUnhealthyPartitionsPerService": "50",
+             "maxPercentUnhealthyReplicasPerPartition": "50"
+           }
+         }
+       }
+     }
+   }
   ],
   "outputs": {
     "clusterProperties": {
@@ -690,4 +770,3 @@
     }
   }
 }
-

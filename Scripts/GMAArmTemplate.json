@@ -1,0 +1,203 @@
+{
+ "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+ "contentVersion": "1.0.0.0",
+ "parameters": {
+   "clusterName": {
+     "type": "string",
+     "defaultValue": "Cluster",
+     "metadata": {
+       "description": "Name of your cluster - Between 3 and 23 characters. Letters and numbers only."
+     }
+   },
+   "applicationTypeName": {
+     "type": "string",
+     "defaultValue": "ApplicationType",
+     "metadata": {
+       "description": "The application type name."
+     }
+   },
+   "applicationTypeVersion": {
+     "type": "string",
+     "defaultValue": "1",
+     "metadata": {
+       "description": "The application type version."
+     }
+   },
+   "appPackageUrl": {
+     "type": "string",
+     "metadata": {
+       "description": "The URL to the application package sfpkg file."
+     }
+   },
+   "applicationName": {
+     "type": "string",
+     "defaultValue": "Application1",
+     "metadata": {
+       "description": "The name of the application resource."
+     }
+   },
+   "fabricMdsAgentServiceName": {
+     "type": "string",
+     "defaultValue": "Application1~Service1",
+     "metadata": {
+       "description": "The name of the service resource in the format of {applicationName}~{serviceName}."
+     }
+   },
+   "fabricMdsAgentServiceTypeName": {
+     "type": "string",
+     "defaultValue": "Service1Type",
+     "metadata": {
+       "description": "The name of the service type."
+     }
+   },
+   "fabricMonitoringServiceName": {
+     "type": "string",
+     "defaultValue": "Application1~Service2",
+     "metadata": {
+       "description": "The name of the service resource in the format of {applicationName}~{serviceName}."
+     }
+   },
+   "fabricMonitoringServiceTypeName": {
+     "type": "string",
+     "defaultValue": "Service2Type",
+     "metadata": {
+       "description": "The name of the service type."
+     }
+   }
+ },
+ "variables": {
+   "clusterLocation": "[resourcegroup().location]",
+   "mandatoryApplicationParameters": {
+			"ClusterName": "YarinTest",
+			"MAMdmAccountName": "[parameters('mdmAccoutName')]",
+			"MAMdmNamespace": "[parameters('mdmNamespace')]",
+			"GCSEnvironment": "[parameters('gcsEnvironment')]",
+			"GCSAccount": "[parameters('gcsAccount')]",
+			"GCSNamespace": "[parameters('gcsNamespace')]",
+			"GCSRegion": "[parameters('gcsRegion')]", 
+			"GCSAuthId": "[parameters('gcsAuthId')]",
+			"GCSConfigVersion": "[parameters('gcsConfigVersion')]",
+			"ApplicationsThatReportPartitionHealth": "[parameters('partitionHealthReportingApplication')]"
+		},
+ },
+ "resources": [
+   {
+     "apiVersion": "2019-03-01",
+     "type": "Microsoft.ServiceFabric/clusters/applicationTypes",
+     "name": "[concat(parameters('clusterName'), '/', parameters('applicationTypeName'))]",
+     "location": "[variables('clusterLocation')]",
+     "dependsOn": [],
+     "properties": {
+       "provisioningState": "Default"
+     }
+   },
+   {
+     "apiVersion": "2019-03-01",
+     "type": "Microsoft.ServiceFabric/clusters/applicationTypes/versions",
+     "name": "[concat(parameters('clusterName'), '/', parameters('applicationTypeName'), '/', parameters('applicationTypeVersion'))]",
+     "location": "[variables('clusterLocation')]",
+     "dependsOn": [
+       "[concat('Microsoft.ServiceFabric/clusters/', parameters('clusterName'), '/applicationTypes/', parameters('applicationTypeName'))]"
+     ],
+     "properties": {
+       "provisioningState": "Default",
+       "appPackageUrl": "[parameters('appPackageUrl')]"
+     }
+   },
+   {
+     "apiVersion": "2019-03-01",
+     "type": "Microsoft.ServiceFabric/clusters/applications",
+     "name": "[concat(parameters('clusterName'), '/', parameters('applicationName'))]",
+     "location": "[variables('clusterLocation')]",
+     "dependsOn": [
+       "[concat('Microsoft.ServiceFabric/clusters/', parameters('clusterName'), '/applicationTypes/', parameters('applicationTypeName'), '/versions/', parameters('applicationTypeVersion'))]"
+     ],
+     "properties": {
+       "provisioningState": "Default",
+       "typeName": "[parameters('applicationTypeName')]",
+       "typeVersion": "[parameters('applicationTypeVersion')]",
+       "parameters": {
+          "GCSAccount": "GdpXteamDrill",
+          "GCSEnvironment": "Diagnostics PROD",
+          "GCSNamespace": "YarinkagalDrill",
+          "GCSRegion": "eastus",
+          "GCSAuthIdType": "AuthKeyVault",
+          "GCSAuthId": "XTEAMDRILL.GENEVA.KEYVAULT.GDP.AZURE.COM",
+          "GCSConfigVersion": "1.1",
+          "UseGCS": "true"
+       },
+       "upgradePolicy": {
+         "upgradeReplicaSetCheckTimeout": "01:00:00.0",
+         "forceRestart": "false",
+         "rollingUpgradeMonitoringPolicy": {
+           "healthCheckWaitDuration": "00:02:00.0",
+           "healthCheckStableDuration": "00:05:00.0",
+           "healthCheckRetryTimeout": "00:10:00.0",
+           "upgradeTimeout": "01:00:00.0",
+           "upgradeDomainTimeout": "00:20:00.0"
+         },
+         "applicationHealthPolicy": {
+           "considerWarningAsError": "false",
+           "maxPercentUnhealthyDeployedApplications": "50",
+           "defaultServiceTypeHealthPolicy": {
+             "maxPercentUnhealthyServices": "50",
+             "maxPercentUnhealthyPartitionsPerService": "50",
+             "maxPercentUnhealthyReplicasPerPartition": "50"
+           }
+         }
+       }
+     }
+   },
+		{
+			"type": "Microsoft.Servicefabric/clusters/applications/services",
+			"apiVersion": "2017-07-01-preview",
+			"name": "[concat(parameters('clusterName'), '/', parameters('applicationName'), '/',concat(parameters('applicationName'), '~', parameters('fabricMdsAgentServiceName')))]",
+			"location": "[variables('clusterLocation')]",
+			"properties": {
+				"provisioningState": "Default",
+				"correlationScheme": [],
+				"serviceLoadMetrics": [],
+				"serviceTypeName": "[parameters('fabricMdsAgentServiceTypeName')]",
+				"serviceKind": "Stateless",
+				"instanceCount": "-1",
+				"partitionDescription": {
+					"partitionScheme": "Singleton"
+				},
+				"servicePlacementPolicies": [],
+				"defaultMoveCost": "Zero"
+			},
+			"dependsOn": [
+				"[concat('Microsoft.Servicefabric/clusters/', parameters('clusterName'), '/applications/', parameters('applicationName'))]"
+			]
+		},
+		{
+			"type": "Microsoft.Servicefabric/clusters/applications/services",
+			"apiVersion": "2017-07-01-preview",
+			"name": "[concat(parameters('clusterName'), '/', parameters('applicationName'), '/', concat(parameters('applicationName'), '~', parameters('fabricMonitoringServiceName')))]",
+			"location": "[variables('clusterLocation')]",
+			"properties": {
+				"provisioningState": "Default",
+				"correlationScheme": [{
+					"Scheme": "Affinity",
+					"ServiceName": "[concat('fabric:/System/', parameters('monitoringCorrelationSchemeServiceName'))]"
+				}],
+				"serviceLoadMetrics": [],
+				"serviceTypeName": "[parameters('fabricMonitoringServiceTypeName')]",
+				"serviceKind": "Stateful",
+				"defaultMoveCost": "Zero",
+				"partitionDescription": {
+					"partitionScheme": "Singleton"
+				},
+				"hasPersistedState": "false",
+				"servicePlacementPolicies": [],
+				"targetReplicaSetSize": "[parameters('targetReplicaSetSize')]",
+				"minReplicaSetSize": "[parameters('minReplicaSetSize')]"
+			},
+			"dependsOn": [
+				"[concat('Microsoft.Servicefabric/clusters/', parameters('clusterName'), '/applications/', parameters('applicationName'))]"
+			]
+		}
+   
+   
+ ]
+}

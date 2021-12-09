@@ -10,7 +10,7 @@ namespace VotingWeb.Controllers
 
     public class InventoryController : Controller
     {
-        private TraceLog traceLog;
+        public TraceLog traceLog;
         private InventoryRepository inventory;
         TrafficManager manager;
 
